@@ -77,6 +77,7 @@ void Adding_Two_Numbers_Places_Result_On_Stack()
 {
     // A context
     VMContext* context = VMCreateContext(1);
+    VMStack* stack = VMCreateStack(1024, 100);
 
     // Ordinarily these would come from the heap ofc
     int numberOne = 2;
@@ -94,14 +95,15 @@ void Adding_Two_Numbers_Places_Result_On_Stack()
     context->methods[0].instructions[2].type = ADD;
     context->methods[0].instructions[2].arg.data = 0;
 
-//    VMExecutionContext context;
-    VMExecuteMethod(context, 0);
+    VMExecuteMethod(context, stack, 0);
 
+    int currentIndex = stack->items[stack->currentItem];
+    int* result = (int*)(stack->data + currentIndex);
 
- //   VMDestroyLocalHeap(heap);
+    assert_is_true(*result == 5, "The result of 2 + 3 was not as expected");
+
+    VMDestroyStack(stack);
     VMDestroyContext(context);
-
-
 }
 
 int main()
@@ -112,7 +114,7 @@ int main()
     Creating_A_Stack_Initializes_StackData();
     Allocating_An_Item_On_The_Stack_Increases_Stack_Pointer();
     Freeing_An_Item_Off_The_Stack_Decreases_Stack_Pointer();
+    Adding_Two_Numbers_Places_Result_On_Stack();
 
-//   Adding_Two_Numbers_Places_Result_On_Stack();
     return 0;
 }

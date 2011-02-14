@@ -14,7 +14,31 @@ void VMDestroyContext(VMContext* context)
     free(context);
 }
 
-void VMExecuteMethod(VMContext* context, int method)
+void VMExecuteMethod(VMContext* context, VMStack* stack, int method)
 {
+    int instructionPointer = 0;
+    VMMethod* methodPtr = &context->methods[method];
+    do
+    {
+        VMInstruction* instr = &methodPtr->instructions[instructionPointer];
 
+        switch(instr->type)
+        {
+            case ADD:
+
+            break;
+            case PUSH:
+              //  instr->arg.data
+
+            break;
+            case POP:
+
+            break;
+            default:
+
+            break;
+        }
+
+
+    } while(instructionPointer < methodPtr->instructionCount);
 }
