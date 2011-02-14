@@ -14,7 +14,7 @@ void VMDestroyContext(VMContext* context)
     free(context);
 }
 
-void ExecuteMethod(VMContext* context, VMExecutionContext* executionContext, int method)
+void VMExecuteMethod(VMContext* context, int method)
 {
 
 }

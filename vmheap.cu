@@ -4,7 +4,7 @@
 VMLocalHeap* VMCreateLocalHeap(int heapSizeInBytes)
 {
     VMLocalHeap* heap = (VMLocalHeap*)malloc(sizeof(VMLocalHeap));
-    heap->data = malloc(sizeof(char) * heapSizeInBytes);
+    heap->data = malloc(heapSizeInBytes);
     heap->heapPointer = 0;
     return heap;
 }
