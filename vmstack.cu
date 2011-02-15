@@ -8,34 +8,27 @@ VMStack* VMCreateStack(int sizeInBytes, int maximumItems)
     stack->maxitems = maximumItems;
     stack->data = (unsigned char*)malloc(sizeInBytes);
     stack->items = (VMPrimitive*)malloc(maximumItems * sizeof(VMPrimitive));
-
+    stack->nextFree = stack->data;
     return stack;
 }
 
-void VMStackAlloc(VMStack* stack, VMPrimitiveType type)
+void VMStackAlloc(VMStack* stack, int size)
 {
-    int size = sizeof(int);
     stack->currentItem++;
-
-    if(stack->currentItem == 0)
-    {
-        stack->items[0].data = stack->data;
-    }
-    else
-    {
-        stack->items[stack->currentItem].data = (void*)(((unsigned char*)stack->items[stack->currentItem-1].data) + size);
-    }
+    stack->items[stack->currentItem].data = (void*)stack->nextFree;
+    stack->nextFree += size;
 }
 
 void VMStackFree(VMStack* stack)
 {
+    stack->nextFree = (unsigned char*)stack->items[stack->currentItem].data;
     stack->currentItem--;
 }
 
 void VMStackPush(VMStack* stack, VMPrimitive* input)
 {
-    int size = sizeof(int);
-    VMStackAlloc(stack, input->argType);
+    int size = VMSize(input);
+    VMStackAlloc(stack, size);
 
     VMPrimitive* item = &stack->items[stack->currentItem];
     item->argType = input->argType;
@@ -45,7 +38,7 @@ void VMStackPush(VMStack* stack, VMPrimitive* input)
 
 void VMStackPop(VMStack* stack, VMPrimitive* output)
 {
-    int size = sizeof(int);
+    int size = VMSize(output);
     VMPrimitive* item = &stack->items[stack->currentItem];
 
     memcpy(output->data, item->data, size);

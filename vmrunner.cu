@@ -54,9 +54,28 @@ void VMExecuteMethod(VMContext* context, VMStack* stack, int method)
                                 VMStackPush(stack, &result);
                              break;
                             }
-                        }
+                           }
                         break;
                     }
+                    case FLOAT:
+                    {
+                        float* floatArgOne = (float*)(argOne->data);
+                        switch(argTwo->argType)
+                        {
+                            case FLOAT:
+                            {
+                                float* floatArgTwo = (float*)(argTwo->data);
+
+                                float sum = *floatArgOne + *floatArgTwo;
+                                VMPrimitive result;
+                                result.data = (void*)&sum;
+                                result.argType = FLOAT;
+                                VMStackPush(stack, &result);
+                             break;
+                            }
+                        }
+                    }
+                    break;
                 }
             break;
             }

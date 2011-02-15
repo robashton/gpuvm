@@ -12,7 +12,7 @@
 
 
 typedef enum VMInstructionType { ADD, PUSH, POP } VMInstructionType;
-typedef enum VMPrimitiveType { INT } VMPrimitiveType;
+typedef enum VMPrimitiveType { INT, FLOAT } VMPrimitiveType;
 
 typedef struct VMPrimitive
 {
@@ -44,6 +44,19 @@ typedef struct VMExecutionContext
 {
     void* stack;
 } VMExecutionContext;
+
+
+inline int VMSize(const VMPrimitive* primitive)
+{
+    switch(primitive->argType)
+    {
+        case INT:
+            return sizeof(int);
+        case FLOAT:
+            return sizeof(float);
+    }
+    return 0;
+}
 
 
 #endif

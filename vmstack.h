@@ -6,6 +6,7 @@
 typedef struct VMStack
 {
     unsigned char* data;
+    unsigned char* nextFree;
     int currentItem;
     int maxitems;
     VMPrimitive* items;
@@ -14,7 +15,7 @@ typedef struct VMStack
 
 VMStack* VMCreateStack(int sizeInBytes, int maximumItems);
 void VMDestroyStack(VMStack* stack);
-void VMStackAlloc(VMStack* stack, VMPrimitiveType type);
+void VMStackAlloc(VMStack* stack, int size);
 void VMStackFree(VMStack* stack);
 
 void VMStackPush(VMStack* stack, VMPrimitive* input);
