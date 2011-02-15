@@ -19,17 +19,18 @@
 	<stdio.h>
 	"testing.h"
 
-1297713717 /home/rashton/cudavm/testing.h
+1297774928 /home/rashton/cudavm/testing.h
 
-1297773589 source:/home/rashton/cudavm/main.cu
+1297774711 source:/home/rashton/cudavm/main.cu
 	<stdio.h>
 	<stdlib.h>
 	"gpuvm.h"
 	"testing.h"
 
-1297774181 source:/home/rashton/cudavm/testing.cu
+1297774905 source:/home/rashton/cudavm/testing.cu
 	<stdlib.h>
 	<stdio.h>
+	<stdarg.h>
 	"testing.h"
 
 1297722657 /home/rashton/cudavm/gpuvm.h
@@ -54,7 +55,7 @@
 1297770879 source:/home/rashton/cudavm/vmstack.cu
 	"vmstack.h"
 
-1297774477 source:/home/rashton/cudavm/tests.cu
+1297774566 source:/home/rashton/cudavm/tests.cu
 	<stdio.h>
 	<stdlib.h>
 	"gpuvm.h"
@@ -70,5 +71,5 @@
 
 1297774414 /home/rashton/cudavm/testing_vmengine.h
 
-1297774510 /home/rashton/cudavm/testing_opcodes.h
+1297774982 /home/rashton/cudavm/testing_opcodes.h
 

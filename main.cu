@@ -7,7 +7,7 @@
 
 int main()
 {
-    printf("This will be the compiler/runtime/thingy, for now it's a test runner");
+    printf("This will be the compiler/runtime utility/thingy, for now it's a blank space");
     return 0;
 }
 
