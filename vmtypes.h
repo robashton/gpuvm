@@ -2,7 +2,7 @@
 #define VMTYPES_H
 
 
-#ifdef GPU
+#ifndef TESTINGMODE
 #define GLOBAL __global__ void
 #define DEVICE __device__ void
 #else
