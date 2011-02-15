@@ -30,25 +30,28 @@ void VMExecuteMethod(VMContext* context, VMStack* stack, int method)
                 // Gasp, yes indeed I am taking advantage of the fact
                 // That nothing will be writing into this stack
                 // I actually *want* this, but need to formalise it
-               VMStackItem* argOne = VMStackPeek(stack);
+               VMPrimitive* argOne = VMStackPeek(stack);
                VMStackFree(stack);
-               VMStackItem* argTwo = VMStackPeek(stack);
+               VMPrimitive* argTwo = VMStackPeek(stack);
                VMStackFree(stack);
 
                 // Clearly I won't actually do it like this, it's just to prove a point
-                switch(argOne->type)
+                switch(argOne->argType)
                 {
                     case INT:
                     {
-                        int* intArgOne = (int*)(&stack->data[argOne->index]);
-                        switch(argTwo->type)
+                        int* intArgOne = (int*)(argOne->data);
+                        switch(argTwo->argType)
                         {
                             case INT:
                             {
-                                int* intArgTwo = (int*)(&stack->data[argTwo->index]);
+                                int* intArgTwo = (int*)(argTwo->data);
 
-                                int result = *intArgOne + *intArgTwo;
-                                VMStackPush(stack, (void*)&result, INT);
+                                int sum = *intArgOne + *intArgTwo;
+                                VMPrimitive result;
+                                result.data = (void*)&sum;
+                                result.argType = INT;
+                                VMStackPush(stack, &result);
                              break;
                             }
                         }
@@ -59,8 +62,7 @@ void VMExecuteMethod(VMContext* context, VMStack* stack, int method)
             }
             case PUSH:
             {
-                printf("Push\n");
-                VMStackPush(stack, instr->arg.data, INT);
+                VMStackPush(stack, &instr->arg);
                 break;
             }
             case POP:

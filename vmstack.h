@@ -3,28 +3,22 @@
 
 #include "vmtypes.h"
 
-typedef struct VMStackItem
-{
-    VMPrimitiveType type;
-    int index;
-} VMStackItem;
-
 typedef struct VMStack
 {
     unsigned char* data;
     int currentItem;
     int maxitems;
-    VMStackItem* items;
+    VMPrimitive* items;
 } VMStack;
 
 
 VMStack* VMCreateStack(int sizeInBytes, int maximumItems);
 void VMDestroyStack(VMStack* stack);
-void VMStackAlloc(VMStack* stack, int size);
+void VMStackAlloc(VMStack* stack, VMPrimitiveType type);
 void VMStackFree(VMStack* stack);
 
-void VMStackPush(VMStack* stack, void* data, VMPrimitiveType type);
-void VMStackPop(VMStack* stack, void* dest, VMPrimitiveType type);
-VMStackItem* VMStackPeek(VMStack* stack);
+void VMStackPush(VMStack* stack, VMPrimitive* input);
+void VMStackPop(VMStack* stack, VMPrimitive* output);
+VMPrimitive* VMStackPeek(VMStack* stack);
 
 #endif

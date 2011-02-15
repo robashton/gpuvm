@@ -7,22 +7,23 @@ VMStack* VMCreateStack(int sizeInBytes, int maximumItems)
     stack->currentItem = -1;
     stack->maxitems = maximumItems;
     stack->data = (unsigned char*)malloc(sizeInBytes);
-    stack->items = (VMStackItem*)malloc(maximumItems * sizeof(VMStackItem));
+    stack->items = (VMPrimitive*)malloc(maximumItems * sizeof(VMPrimitive));
 
     return stack;
 }
 
-void VMStackAlloc(VMStack* stack, int size)
+void VMStackAlloc(VMStack* stack, VMPrimitiveType type)
 {
+    int size = sizeof(int);
     stack->currentItem++;
 
     if(stack->currentItem == 0)
     {
-        stack->items[0].index = 0;
+        stack->items[0].data = stack->data;
     }
     else
     {
-        stack->items[stack->currentItem].index = stack->items[stack->currentItem-1].index + size;
+        stack->items[stack->currentItem].data = (void*)(((unsigned char*)stack->items[stack->currentItem-1].data) + size);
     }
 }
 
@@ -31,34 +32,30 @@ void VMStackFree(VMStack* stack)
     stack->currentItem--;
 }
 
-void VMStackPush(VMStack* stack, void* src, VMPrimitiveType type)
+void VMStackPush(VMStack* stack, VMPrimitive* input)
 {
     int size = sizeof(int);
-    VMStackAlloc(stack, size);
+    VMStackAlloc(stack, input->argType);
 
-    VMStackItem* item = &stack->items[stack->currentItem];
-    item->type = type;
+    VMPrimitive* item = &stack->items[stack->currentItem];
+    item->argType = input->argType;
 
-    void* stackPtr = (void*)(stack->data + item->index);
-    memcpy(stackPtr, src, size);
+    memcpy(item->data, input->data, size);
 }
 
-void VMStackPop(VMStack* stack, void* dest, VMPrimitiveType type)
+void VMStackPop(VMStack* stack, VMPrimitive* output)
 {
     int size = sizeof(int);
-    VMStackItem* item = &stack->items[stack->currentItem];
+    VMPrimitive* item = &stack->items[stack->currentItem];
 
-    void* stackPtr = (void*)(stack->data + item->index);
-
-    memcpy(dest, stackPtr, size);
+    memcpy(output->data, item->data, size);
     VMStackFree(stack);
 }
 
-VMStackItem* VMStackPeek(VMStack* stack)
+VMPrimitive* VMStackPeek(VMStack* stack)
 {
     return &stack->items[stack->currentItem];
 }
-
 
 void VMDestroyStack(VMStack* stack)
 {

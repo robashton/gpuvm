@@ -14,16 +14,16 @@
 typedef enum VMInstructionType { ADD, PUSH, POP } VMInstructionType;
 typedef enum VMPrimitiveType { INT } VMPrimitiveType;
 
-typedef struct VMInstructionArg
+typedef struct VMPrimitive
 {
     void* data;
     VMPrimitiveType argType;
-} VMInstructionArg;
+} VMPrimitive;
 
 typedef struct VMInstruction
 {
     VMInstructionType type;
-    VMInstructionArg arg;
+    VMPrimitive arg;
 } VMInstruction;
 
 typedef struct VMMethod
