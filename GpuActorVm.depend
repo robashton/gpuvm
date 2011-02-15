@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1297724364 source:/home/rashton/cudavm/vmrunner.cu
+1297732631 source:/home/rashton/cudavm/vmrunner.cu
 	"vmrunner.h"
+	<stdio.h>
 
 1297724352 /home/rashton/cudavm/vmrunner.h
 	"vmtypes.h"
@@ -20,7 +21,7 @@
 
 1297713717 /home/rashton/cudavm/testing.h
 
-1297724400 source:/home/rashton/cudavm/main.cu
+1297732565 source:/home/rashton/cudavm/main.cu
 	<stdio.h>
 	<stdlib.h>
 	"gpuvm.h"
@@ -47,8 +48,9 @@
 1297722503 source:/home/rashton/cudavm/vmheap.cu
 	"vmheap.h"
 
-1297723378 /home/rashton/cudavm/vmstack.h
+1297732182 /home/rashton/cudavm/vmstack.h
+	"vmtypes.h"
 
-1297723847 source:/home/rashton/cudavm/vmstack.cu
+1297732216 source:/home/rashton/cudavm/vmstack.cu
 	"vmstack.h"
 

@@ -51,8 +51,8 @@ void Allocating_An_Item_On_The_Stack_Increases_Stack_Pointer()
     VMStackAlloc(stack, sizeof(int));
 
     assert_is_true(stack->currentItem == 1, "Current stack item after allocation is not correct");
-    assert_is_true(stack->items[1] == 4, "Top item does not point at correct location in stack");
-    assert_is_true(stack->items[0] == 0, "Old item does not point at first location in the stack");
+    assert_is_true(stack->items[1].index == 4, "Top item does not point at correct location in stack");
+    assert_is_true(stack->items[0].index == 0, "Old item does not point at first location in the stack");
 
     VMDestroyStack(stack);
 }
@@ -97,10 +97,10 @@ void Adding_Two_Numbers_Places_Result_On_Stack()
 
     VMExecuteMethod(context, stack, 0);
 
-    int currentIndex = stack->items[stack->currentItem];
-    int* result = (int*)(stack->data + currentIndex);
+    int result;
+    VMStackPop(stack, (void*)&result, INT);
 
-    assert_is_true(*result == 5, "The result of 2 + 3 was not as expected");
+    assert_is_true(result == 5, "The result of 2 + 3 was not as expected");
 
     VMDestroyStack(stack);
     VMDestroyContext(context);
